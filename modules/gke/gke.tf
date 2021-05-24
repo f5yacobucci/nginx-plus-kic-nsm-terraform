@@ -25,7 +25,7 @@ data "google_container_engine_versions" "kubernetes_version" {
 resource "google_container_cluster" "primary" {
   name     = var.gke_cluster_name
   location = var.region
-  node_version       = data.google_container_engine_versions.kubernetes_version.latest_node_version
+  //node_version       = data.google_container_engine_versions.kubernetes_version.latest_node_version
   min_master_version = data.google_container_engine_versions.kubernetes_version.latest_node_version
   remove_default_node_pool = true //using a separately managed node pool , so deleting the default
   initial_node_count       = 1 // In regional or multi-zonal clusters, this is the number of nodes per zone.
