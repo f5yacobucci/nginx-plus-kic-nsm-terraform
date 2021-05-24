@@ -1,8 +1,18 @@
 # Pre-requsite 1 - Install and configure Docker, Kubectl & Terraform
 ```
-Install Docker      - <latest>
-Install kubectl     - <latest>
-Install Terraform   - <0.12>
+Install Docker               - <latest>
+Install kubectl              - <latest>
+Install Terraform            - <0.15>
+Install NGINX Service Mesh   - <1.0.1> --> Follow the instruction here to install nginx-meshctl. This code install  
+                                           v1.0.1 NSM images from the remote repo. If you want to change the repo
+                                           for installing, change it in this file modules/api/virtualroutes.tf (--registry-server)
+A special instruction - 
+kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config  get-value core/account) - 
+is executed as part of terraform installation which you can find here modules/gke/gke.tf  as referred here https://docs.nginx.com/nginx-service-mesh/get-started/platform/gke/
+
+A special instruction to make KIC to run with NSM is implemented in this file module/nginx-plus/nginx.tf as referred here
+https://docs.nginx.com/nginx-service-mesh/tutorials/kic/deploy-with-kic/
+
 ```
 # Get nginx-plus repo crt and keys
 ```
@@ -14,11 +24,6 @@ Download the license key nginx-repo.crt & nginx-repo.key from the F5 portal and 
 
 # To install AKS cluster and run NGINX Plus Ingress Controller & Prometheus 
 [Refer AKS installation doc](docs/aks.md)
-
-# To run Local(docker-desktop) NGINX Plus Ingress Controller & Prometheus 
-[Refer Local installation doc](docs/local.md)
-
-
 
 # Initialize Terraform workspace
 
@@ -159,14 +164,11 @@ Destroy complete! Resources: 38 destroyed.
 # TODO
 
 ```
-# API Security (JWT)
 # Auto TLS rotation
 # OpenTracing
-# Tighten RBAC
 # Revisit some hardcoded string
 # grpc support
 # default-http-backend created with exposed node port as default
-# Add more APIs
 # NGINX Plus Ingress Controller metrics fix to Prometheus
 # Auto imporing json for grafana  (https://github.com/nginxinc/nginx-prometheus-exporter/tree/master/grafana)
 # Upgrade terraform to cater for CRD support currently on beta.
