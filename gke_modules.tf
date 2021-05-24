@@ -10,10 +10,10 @@ module "prometheus" {
 }
 
 module "api-deployment" {
-  source = "./modules/apis"
-  tls_crt                   = file("default.crt")
-  tls_key                   = file("default.key")
-  image                     = "ingress/${var.ingress_controller_image_name}:${var.ingress_conroller_version}"
+  source  = "./modules/apis"
+  tls_crt = file("default.crt")
+  tls_key = file("default.key")
+  image   = "ingress/${var.ingress_controller_image_name}:${var.ingress_conroller_version}"
 
   load_config_file       = false
   host                   = module.gke.primary_cluster_endpoint
@@ -39,15 +39,15 @@ module "nginx-plus-ingress-deployment" {
   tls_crt                   = file("default.crt")
   tls_key                   = file("default.key")
   name_of_ingress_container = var.name_of_ingress_container
+  ingress_conroller_version = var.ingress_conroller_version
   image                     = "${var.gke_container_registry_region}/${var.project_id}/${var.ingress_controller_image_name}:${var.ingress_conroller_version}"
-
-  load_config_file       = false
-  host                   = module.gke.primary_cluster_endpoint
-  token                  = module.gke.primary_cluster_token
-  cluster_ca_certificate = module.gke.primary_cluster_ca_certificate
-  client_key             = ""
-  client_certificate     = ""
-  depends_on_kube        = [module.gke.primary_endpoint, module.gke.node_pool, module.gke.endpoint]
+  load_config_file          = false
+  host                      = module.gke.primary_cluster_endpoint
+  token                     = module.gke.primary_cluster_token
+  cluster_ca_certificate    = module.gke.primary_cluster_ca_certificate
+  client_key                = ""
+  client_certificate        = ""
+  depends_on_kube           = [module.gke.primary_endpoint, module.gke.node_pool, module.gke.endpoint]
 }
 
 module "gke" {

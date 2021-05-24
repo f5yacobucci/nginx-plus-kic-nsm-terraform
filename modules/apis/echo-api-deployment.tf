@@ -1,5 +1,5 @@
 resource "kubernetes_service" "echo-service" {
-  depends_on = [kubernetes_namespace.microservice-namespace]
+  depends_on = [kubernetes_namespace.microservice-namespace,null_resource.deploy_nsm]
   metadata {
     name      = "echo-service"
     namespace = "microservice-namespace"
@@ -19,7 +19,7 @@ resource "kubernetes_service" "echo-service" {
 }
 
 resource "kubernetes_deployment" "echo-api-deployment" {
-  depends_on = [kubernetes_namespace.microservice-namespace]
+  depends_on = [kubernetes_namespace.microservice-namespace,null_resource.deploy_nsm]
   metadata {
     name = "echo-api-deployment"
     labels = {

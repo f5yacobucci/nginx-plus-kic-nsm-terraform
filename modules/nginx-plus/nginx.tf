@@ -36,11 +36,10 @@ resource "kubernetes_daemonset" "nginx-ingress-deployment" {
   metadata {
     name = "nginx-plus-ingress-controller"
     labels = {
-      app = "nplus-ingerss-ctrl"
+      app = "nplus-ingerss-ctrl",
     }
     namespace = kubernetes_namespace.nginx-plus-ingress-ns.metadata[0].name
   }
-
   spec {
     selector {
       match_labels = {
@@ -51,8 +50,11 @@ resource "kubernetes_daemonset" "nginx-ingress-deployment" {
       metadata {
         labels = {
           app = "nplus-ingerss-ctrl"
+          "nsm.nginx.com/daemonset" = "nplus-ingerss-ctrl"
         }
         annotations = {
+          "nsm.nginx.com/enable-ingress" = "true"
+          #"nsm.nginx.com/enable-egress"  = "true"
           "prometheus.io/scrape" = "true"
           "prometheus.io/port"   = "9500"
         }
@@ -63,14 +65,14 @@ resource "kubernetes_daemonset" "nginx-ingress-deployment" {
           name = kubernetes_secret.nginx-plus-ingress-default-secret.metadata.0.name
         }
         service_account_name = kubernetes_service_account.nginx-plus-ingress-sa.metadata[0].name
-        /*
+        # NSM: The Spire agent socket is added as a volume to the NGINX Plus Ingress Controller Pod spec
         volume {
           name = "spire-agent-socket"
           host_path {
             path = "/run/spire/sockets"
             type = "DirectoryOrCreate"
           }
-        }*/
+        }
         container {
           image = var.image 
           name  = var.name_of_ingress_container
@@ -85,11 +87,12 @@ resource "kubernetes_daemonset" "nginx-ingress-deployment" {
           }
           port {
             container_port = 443
-          } /*
+          } 
+          # NSM:The socket is mounted to the NGINX Plus Ingress Controller container:
           volume_mount {
             name       = "spire-agent-socket"
             mount_path = "/run/spire/sockets"
-          } */
+          }
           security_context {
             allow_privilege_escalation = true
             run_as_user                = 101
@@ -121,7 +124,7 @@ resource "kubernetes_daemonset" "nginx-ingress-deployment" {
             "-enable-snippets",
             "-ingress-class=edgeproxy",
             //"-enable-app-protect",
-            //"-spire-agent-address=/run/spire/sockets/agent.sock", # enable mTLS for NSM
+            "-spire-agent-address=/run/spire/sockets/agent.sock", # enable mTLS for NSM
             "-prometheus-metrics-listen-port=9500"
             //"-v=3" # Enables extensive logging. Useful for troubleshooting.
           ])

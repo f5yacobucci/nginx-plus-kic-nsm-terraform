@@ -92,25 +92,10 @@ spec:
     route: microservice-namespace/weather-service-vsr
   - path: /helloworld
     route: microservice-namespace/echo-service-vsr
-  - path: /
-    location-snippets: 
-      if ($request_method = 'OPTIONS') {
-        add_header 'Access-Control-Allow-Origin' '*';
-        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS';
-        add_header 'Access-Control-Allow-Headers' 'Authorization,Accept,Origin,DNT,X-Chisel-Proxied-Url,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range';
-        add_header 'Access-Control-Max-Age' 1728000;
-        add_header 'Content-Type' 'text/plain; charset=utf-8';
-        add_header 'Content-Length' 0;
-        return 204;
-      }
-      if ( $idp_issuer = 0) { 
-        return 403; 
-      }
-      if ( $isAudienceAllowed = 0) { 
-        return 403; 
-      }
-    
-    route: bookinfo/swapi-service-vsr
+  - path: /swapi
+    route: microservice-namespace/swapi-service-vsr
+  - path: /target
+    route: microservice-namespace/target-service-vsr
 ---
 apiVersion: k8s.nginx.org/v1
 kind: VirtualServerRoute
@@ -193,7 +178,7 @@ spec:
   host: api.powerhour.com
   upstreams:
   - name: swapi-service-upstream 
-    service: productpage
+    service: swapi-service
     port: 9080
     lb-method: round_robin
     max-fails: 1
@@ -210,4 +195,20 @@ spec:
   - path: /
     action:
       pass: swapi-service-upstream
+---
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServerRoute
+metadata:
+  name: target-service-vsr
+  namespace: microservice-namespace
+spec:
+  host: api.powerhour.com
+  upstreams:
+  - name: target-service-upstream 
+    service: target-svc
+    port: 80
+  subroutes:
+  - path: /target
+    action:
+      pass: target-service-upstream
 ---

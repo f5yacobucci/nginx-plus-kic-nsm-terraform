@@ -83,3 +83,13 @@ resource "google_container_node_pool" "primary_node_pool" {
   }
 }
 
+/** Create a ClusterRole and ClusterRoleBinding for NGINX Service Mesh **/
+resource "null_resource" "cluster-role-nsm" {
+
+  provisioner "local-exec" {
+    command = "kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config  get-value core/account)"
+  }
+   depends_on = [google_container_cluster.primary, google_container_node_pool.primary_node_pool]
+}
+
+

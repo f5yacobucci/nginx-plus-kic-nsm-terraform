@@ -10,3 +10,8 @@ output "grafana_dashboar_url" {
   description = "URL for Grafana Dashboard "
   value       = "http://${local.grafana_dashboard_url}:3000"
 }
+
+output "target_api_url" {
+  description = "HTTPie command to access Target API"
+  value       = "http  ${local.external_loadbalancer}/target 'Host: api.powerhour.com' 'Authorization: Bearer '"
+}

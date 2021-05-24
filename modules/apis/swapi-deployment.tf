@@ -1,5 +1,5 @@
 resource "kubernetes_service" "swapi-service" {
-  depends_on = [kubernetes_namespace.microservice-namespace]
+  depends_on = [kubernetes_namespace.microservice-namespace,null_resource.deploy_nsm]
   metadata {
     name      = "swapi-service"
     namespace = "microservice-namespace"
@@ -19,7 +19,7 @@ resource "kubernetes_service" "swapi-service" {
 }
 
 resource "kubernetes_deployment" "swapi-api-deployment" {
-  depends_on = [kubernetes_namespace.microservice-namespace]
+  depends_on = [kubernetes_namespace.microservice-namespace,null_resource.deploy_nsm]
   metadata {
     name = "swapi-api-deployment"
     labels = {
