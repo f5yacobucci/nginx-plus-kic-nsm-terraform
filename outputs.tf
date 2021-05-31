@@ -15,3 +15,8 @@ output "target_api_url" {
   description = "HTTPie command to access Target API"
   value       = "http  ${local.external_loadbalancer}/target 'Host: api.powerhour.com' 'Authorization: Bearer '"
 }
+
+output "swapi_url" {
+  description = "HTTPie command to access swapi API"
+  value       = "http  ${local.external_loadbalancer}/swapi 'Host: api.powerhour.com' 'Authorization: Bearer '"
+}
