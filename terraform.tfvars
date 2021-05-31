@@ -3,7 +3,7 @@ environment = ""
 prefix      =  //keep it within 3-5 letters as the code is also generating unique petname along with it.
 # GKE specific variables
 project_id       = "Your_GKE_Project_Id"
-tag_1_node_pool  = "created-for-nginx-by-raj"             //some meaningful tags
+tag_1_node_pool  = "created-for-nginx-by-???"             //some meaningful tags
 tag_2_node_pool  = "gke-node-pool-for-nginx-plus-ingress" //some meaningful tags
 unique_user_id   = "your-unique-id"                         //your username would be unique
 gke_cluster_name = "gke-cluster"
@@ -14,12 +14,12 @@ gke_kubernetes_version        = "1.19." //  gcloud container get-server-config -
 gke_container_registry_region = "asia.gcr.io"
 
 # number of nodes per instance group.
-gke_num_nodes = 1
+gke_num_nodes = 3
 # The number of nodes to create in this cluster's default node pool, if you specify regional cluster above and make this initial_node_count as 3 , you would end up with 9 nodes - 3 nodes per zone in a region.
 initial_node_count = 1
 network            = "gke-vpc"
 subnetwork         = "gke-subnet"
-machine_type       = "n1-standard-1"
+machine_type       = "n2-standard-4"
 subnetwork_cidr    = "10.10.0.0/24"
 gke_username       = ""
 gke_password       = ""
@@ -27,7 +27,7 @@ gke_password       = ""
 # Edge nginx plus ingress controller variables
 name_of_ingress_container     = "nginx-plus-ingress-container-1-10-0"
 ingress_controller_image_name = "nginx-plus-ingress"
-ingress_conroller_version     = "1.11.2"
+ingress_conroller_version     = "1.11.3"
 
 
 # Variables for Testing APIs
