@@ -25,7 +25,7 @@ gke_username       = ""
 gke_password       = ""
 
 # Edge nginx plus ingress controller variables
-name_of_ingress_container     = "nginx-plus-ingress-container-1-10-0"
+name_of_ingress_container     = "nginx-plus-ingress-container-1-11-3"
 ingress_controller_image_name = "nginx-plus-ingress"
 ingress_conroller_version     = "1.11.3"
 
