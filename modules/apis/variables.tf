@@ -7,7 +7,8 @@ variable "echo-api-image" {
 }
 variable "swapi-image" {}
 variable depends_on_nginx_plus {}
-
+variable nginx_service_mesh_version {}
+variable nginx_service_mesh_registry_name {}
 variable  host {}
 variable  token  {}
 variable  cluster_ca_certificate {}

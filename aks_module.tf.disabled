@@ -22,6 +22,9 @@ module "api-deployment" {
   client_key             = base64decode(module.aks.client_key)
   cluster_ca_certificate = base64decode(module.aks.cluster_ca_certificate)
   client_certificate     = base64decode(module.aks.client_certificate)
+    
+  nginx_service_mesh_version       = var.nginx_service_mesh_version
+  nginx_service_mesh_registry_name = var.nginx_service_mesh_registry_name
 
   weather-api-image      = var.weather-api-image
   echo-api-image         = var.echo-api-image

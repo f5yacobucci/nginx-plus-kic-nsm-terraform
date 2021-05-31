@@ -45,3 +45,7 @@ system_node_label_identifier      = "aks-system-node"
 application_node_label_identifier = "aks-application-node"
 vpc_subnet_cidr                   = "10.1.0.0/24"
 vpc_cidr                          = "10.1.0.0/16"
+
+#nginx service mesh
+nginx_service_mesh_version        = "1.0.1"
+nginx_service_mesh_registry_name  = "docker-registry.nginx.com/nsm"

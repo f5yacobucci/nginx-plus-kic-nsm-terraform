@@ -108,6 +108,8 @@ variable "aks_ingress_controller_prefix" {
 
 ########################################################################################################
 
-variable "ingress_conroller_version" { default = "1.7.2" }
+variable "ingress_conroller_version" { default = "1.11.3" }
 
 variable "ingress_controller_image_name" { default = "nginx-plus-ingress" }
+variable nginx_service_mesh_version {}
+variable "nginx_service_mesh_registry_name" {}

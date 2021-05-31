@@ -24,6 +24,11 @@ module "api-deployment" {
   weather-api-image      = var.weather-api-image
   echo-api-image         = var.echo-api-image
   swapi-image            = var.swapi-image
+
+    
+  nginx_service_mesh_version       = var.nginx_service_mesh_version
+  nginx_service_mesh_registry_name = var.nginx_service_mesh_registry_name
+  
   depends_on_nginx_plus  = [module.nginx-plus-ingress-deployment.lb_ip, module.gke.primary_endpoint, module.gke.node_pool, module.gke.endpoint]
 
 }
